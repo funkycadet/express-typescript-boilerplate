@@ -1,0 +1,6 @@
+dist
+node_modules
+.env.example
+.eslintrc.js
+.prettierrc.js
+bun.lockb
