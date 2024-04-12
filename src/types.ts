@@ -1,11 +1,11 @@
-import { Request } from 'express';
-import { IUser } from './interfaces';
-// import { User } from '@prisma/client';
+// import { User } from "@prisma/client";
+import { IUser } from "./interfaces";
+import { Request } from "express";
 
-export type TokenData = { id: string; resourceType: string };
+
+export type TokenData = { id: string; role: string };
+export type PublicUserData = Omit<IUser, "password" | "refreshTokens">;
 
 export interface ProtectedRequest extends Request {
-  user?: IUser;
+  user: IUser;
 }
-
-export type PublicUserData = Omit<IUser, 'password' | 'refreshTokens'>;

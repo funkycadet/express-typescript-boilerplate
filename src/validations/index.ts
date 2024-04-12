@@ -1,3 +1,4 @@
-import { registerSchema, loginSchema } from './authSchema';
+import { signupSchema, loginSchema } from "./authSchema";
+import { updateUserSchema } from "./userSchema";
 
-export { registerSchema, loginSchema };
+export { signupSchema, loginSchema, updateUserSchema };
