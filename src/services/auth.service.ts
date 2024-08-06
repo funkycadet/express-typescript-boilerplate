@@ -1,19 +1,19 @@
-import * as argon from "argon2";
+import * as argon from 'argon2';
 import {
   ACCESS_TOKEN_EXPIRY,
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_EXPIRY,
   REFRESH_TOKEN_SECRET,
-} from "../config";
-import { db } from "../database";
-import UserService from "./user.service";
-import { IUser } from "../interfaces";
-import { signJWT, stripUser, verifyJWT } from "../utils";
+} from '../config';
+import { db } from '../database';
+import UserService from './user.service';
+import { IUser } from '../interfaces';
+import { signJWT, verifyJWT } from '../utils';
 import {
   UnauthorizedError,
   ForbiddenError,
   NotFoundError,
-} from "../exceptions";
+} from '../exceptions';
 
 class AuthService {
   user: UserService;
@@ -26,17 +26,20 @@ class AuthService {
     refreshToken: string;
     accessToken: string;
   } {
-    const dataToSign = { id: resource.id, role: resource.role };
+    const dataToSign = {
+      id: resource.id,
+      roles: resource.roles
+    };
 
     const accessToken = signJWT(
       dataToSign,
       ACCESS_TOKEN_SECRET,
-      ACCESS_TOKEN_EXPIRY
+      ACCESS_TOKEN_EXPIRY,
     );
     const refreshToken = signJWT(
       dataToSign,
       REFRESH_TOKEN_SECRET,
-      REFRESH_TOKEN_EXPIRY
+      REFRESH_TOKEN_EXPIRY,
     );
 
     return { accessToken, refreshToken };
@@ -46,8 +49,9 @@ class AuthService {
     firstName: string,
     lastName: string,
     email_address: string,
+    password: string,
     phone_number: string,
-    password: string
+    gender: string,
   ): Promise<any> {
     const hashedPassword = await argon.hash(password);
 
@@ -58,21 +62,21 @@ class AuthService {
       firstName,
       lastName,
       email_address,
-      phone_number,
       password: hashedPassword,
+      phone_number,
+      gender,
     });
-    return stripUser(user);
+    return user
   }
 
   public async login(
     email_address: string,
-    password: string
+    password: string,
   ): Promise<{
-    data?: any;
+    data: IUser;
     accessToken: string;
     refreshToken: string;
   }> {
-    // let resource: any;
     const user = await db.user.findUnique({
       where: {
         email_address,
@@ -90,10 +94,12 @@ class AuthService {
       refreshTokens: [...refreshTokens, refreshToken],
     });
     // refreshTokens.push(refreshToken);
-    return { data: stripUser(user), accessToken, refreshToken };
+    return { data: user, accessToken, refreshToken };
   }
 
-  async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
+  public async refreshToken(
+    refreshToken: string,
+  ): Promise<{ accessToken: string }> {
     if (!refreshToken) throw new UnauthorizedError(`No token provided`);
 
     const token: any = verifyJWT(refreshToken, REFRESH_TOKEN_SECRET);
@@ -105,19 +111,14 @@ class AuthService {
     if (!user) throw new NotFoundError(`No user found`);
 
     const accessToken = signJWT(
-      { id: user.id, role: user.role },
-      // user,
+      {
+        id: user.id,
+        roles: user.roles
+      },
       ACCESS_TOKEN_SECRET,
-      ACCESS_TOKEN_EXPIRY
+      ACCESS_TOKEN_EXPIRY,
     );
     return { accessToken };
-    // const user = await this.user.getUser({ refreshTokens: refreshToken });
-    // if (!user.refreshTokens)
-    // try {
-    //   const token: any = verifyJWT(refreshToken, REFRESH_TOKEN_SECRET)
-    //   const user = await this.user.getUser(token.id)
-
-    // }
   }
 }
 
