@@ -14,7 +14,8 @@ model User {
   email_address String   @unique
   phone_number  String
   password      String
-  role          Role?    @default(user)
+  gender        String
+  roles          Role[]
   refreshTokens String[]
 
   createdAt DateTime @default(now())
