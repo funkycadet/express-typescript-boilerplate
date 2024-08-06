@@ -26,13 +26,13 @@ export const verifyJWT = (token: string, secret: string): TokenData | null => {
   // }
 };
 
-export const stripUser = (resource: IUser): PublicUserData => {
-  if (resource.role === "user") {
-    const { password, ...restOfUser } = resource;
-    return restOfUser as PublicUserData;
-  } else {
-    //  if (resource.role === "admin") {
-    const { password, ...restOfUser } = resource;
-    return restOfUser as PublicUserData;
-  }
-};
+// export const stripUser = (resource: IUser): PublicUserData => {
+//   if (resource.role === "user") {
+//     const { password, ...restOfUser } = resource;
+//     return restOfUser as PublicUserData;
+//   } else {
+//     //  if (resource.role === "admin") {
+//     const { password, ...restOfUser } = resource;
+//     return restOfUser as PublicUserData;
+//   }
+// };

@@ -1,3 +1,3 @@
-import { signJWT, stripUser, verifyJWT } from "./jwt";
+import { signJWT, verifyJWT } from "./jwt";
 
-export { signJWT, stripUser, verifyJWT };
+export { signJWT, verifyJWT };
