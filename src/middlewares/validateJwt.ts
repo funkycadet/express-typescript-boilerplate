@@ -1,17 +1,16 @@
 import {
-  Express,
   Request,
   Response,
   NextFunction,
   RequestHandler,
 } from 'express';
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
 
 import { UnauthorizedError } from '../exceptions';
 import { ACCESS_TOKEN_SECRET } from '../config';
 import { UserService } from '../services';
 import { ProtectedRequest } from '../types';
+import { IUser } from '../interfaces';
 
 const user = new UserService();
 
@@ -36,18 +35,8 @@ export default function validateJWT(): RequestHandler {
           `Bearer not passed in authorization headers`,
         );
 
-      const decoded: any = jwt.verify(token, String(ACCESS_TOKEN_SECRET));
-
-      if (decoded.role === 'patient') {
-        const resource = await user.getUserById(decoded.id);
-
-        if (!resource)
-          throw new UnauthorizedError(
-            `Authentication failed. User account not found. Please log in to continue!`,
-          );
-
-        req.user = resource;
-      }
+      const decoded = jwt.verify(token, String(ACCESS_TOKEN_SECRET)) as IUser;
+      req.user = decoded;
 
       next();
     } catch (err: any) {

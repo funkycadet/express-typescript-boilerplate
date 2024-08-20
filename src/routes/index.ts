@@ -1,4 +1,5 @@
 import authRouter from "./auth.routes";
 import userRouter from "./user.routes";
+import healthRouter from "./healthCheck.routes";
 
-export { authRouter, userRouter };
+export { authRouter, healthRouter, userRouter };

@@ -7,6 +7,7 @@ export interface IUser {
   email_address: string;
   phone_number: string;
   password: string;
-  role?: Role;
+  gender: string;
+  roles?: Role[];
   refreshTokens?: string[];
 }

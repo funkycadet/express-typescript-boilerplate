@@ -6,9 +6,9 @@ const userController = new UserController();
 const userRouter = Router();
 
 userRouter.get("/", userController.getAll);
+userRouter.get("/me", validateJWT(), userController.getMe);
 userRouter.get("/:id", userController.getUserById);
 userRouter.get("/user/:params", userController.getUser);
 userRouter.patch("/:id", userController.updateUser);
-userRouter.get("/me", validateJWT(), userController.getMe);
 
 export default userRouter;

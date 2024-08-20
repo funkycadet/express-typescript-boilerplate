@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/user.service';
 import { BadRequestError, UnauthorizedError } from '../exceptions';
 import { ProtectedRequest } from '../types';
-import { stripUser } from '../utils';
 
 class UserController {
   service: UserService;
@@ -23,13 +22,7 @@ class UserController {
 
       const users = await this.service.getAllUsers(offsetValue, limitValue);
 
-      const processedUsers = [];
-      for (const user of users) {
-        const foundUser = stripUser(user);
-        processedUsers.push(foundUser);
-      }
-
-      return res.status(200).json({ status: 'success', data: processedUsers });
+      return res.status(200).json({ status: 'success', data: users });
     } catch (err: any) {
       next(err);
     }
@@ -63,9 +56,8 @@ class UserController {
       if (!id) throw new BadRequestError(`No id provided`);
 
       const user = await this.service.getUserById(id);
-      const foundUser = stripUser(user);
 
-      return res.status(200).json({ status: 'success', data: foundUser });
+      return res.status(200).json({ status: 'success', data: user });
     } catch (err: any) {
       next(err);
     }
@@ -98,9 +90,9 @@ class UserController {
       //   throw new BadRequestError(`No email address provided`);
 
       const user = await this.service.getUser({ searchParams });
-      const foundUser = stripUser(user);
+      // const foundUser = stripUser(user);
 
-      return res.status(200).json({ status: 'success', data: foundUser });
+      return res.status(200).json({ status: 'success', data: user });
     } catch (err: any) {
       next(err);
     }

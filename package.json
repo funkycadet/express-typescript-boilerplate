@@ -1,19 +1,20 @@
 {
   "name": "express-typescript-template",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A boilerplate for Express projects written in TypeScript",
   "main": "server.ts",
   "author": "Eric Alaribe",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/server.js",
-    "start:dev": "tsc-watch --onSuccess \"ts-node ./src/server.ts\"",
     "build": "tsc",
-    "migration:dev": "prisma migrate dev",
-    "migration:run": "prisma migrate deploy",
+    "start": "node dist/src/server.js",
+    "start:dev": "tsc-watch --onSuccess \"ts-node ./src/server.ts\"",
+    "migration:create": "prisma migrate dev",
+    "migration:deploy": "prisma migrate deploy",
     "migration:generate": "prisma generate",
-    "prisma:studio": "prisma studio",
-    "prisma:init": "npx prisma init"
+    "prisma:init": "npx prisma init",
+    "prisma:seed": "ts-node --transpile-only prisma/seed.ts",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",

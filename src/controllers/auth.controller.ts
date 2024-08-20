@@ -13,15 +13,16 @@ class AuthController {
     next: NextFunction
   ): Promise<Response> => {
     try {
-      const { firstName, lastName, email_address, phone_number, password } =
+      const { firstName, lastName, email_address, password, phone_number, gender } =
         req.body;
 
       const user = await this.service.signup(
         firstName,
         lastName,
         email_address,
+        password,
         phone_number,
-        password
+        gender
       );
 
       return res.status(201).json({ status: "success", data: user });
