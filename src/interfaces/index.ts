@@ -1,3 +1,3 @@
-import { IUser } from "./user.interface";
+import { IUser } from './user.interface';
 
 export { IUser };
