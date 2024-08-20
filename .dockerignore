@@ -2,5 +2,8 @@ dist
 node_modules
 .env.example
 .eslintrc.js
+.eslinrc.json
+.prettierrc
 .prettierrc.js
+.yarnrc.yml
 bun.lockb
