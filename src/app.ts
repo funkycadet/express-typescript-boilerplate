@@ -13,7 +13,7 @@ export default async (app: Application) => {
   if (process.env.ENV === 'development') app.use(morgan('dev'));
 
   // CORS
-  app.use(cors({credentials: true}));
+  app.use(cors({ credentials: true }));
   app.use(helmet());
 
   // Request body parser
@@ -26,8 +26,8 @@ export default async (app: Application) => {
   // Application Routes
   // app.use("/", healthRouter); // Health check
   app.use('/auth', authRouter);
-  app.use('/users', userRouter);
-  app.use('/health', healthRouter)
+  app.use('/user', userRouter);
+  app.use('/health', healthRouter);
   // Catch and handle all 404 errors
   app.all('*', function (req: Request, res: Response): Response {
     return res.sendStatus(404);
