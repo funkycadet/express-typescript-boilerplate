@@ -8,11 +8,8 @@ import jwt from 'jsonwebtoken';
 
 import { UnauthorizedError } from '../exceptions';
 import { ACCESS_TOKEN_SECRET } from '../config';
-import { UserService } from '../services';
 import { ProtectedRequest } from '../types';
 import { IUser } from '../interfaces';
-
-const user = new UserService();
 
 export default function validateJWT(): RequestHandler {
   return async (req: ProtectedRequest, res: Response, next: NextFunction) => {
