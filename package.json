@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "start": "node dist/src/server.js",
     "start:dev": "tsc-watch --onSuccess \"ts-node ./src/server.ts\"",
     "migration:create": "prisma migrate dev",
@@ -14,7 +15,13 @@
     "migration:generate": "prisma generate",
     "prisma:init": "npx prisma init",
     "prisma:seed": "ts-node --transpile-only prisma/seed.ts",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:int": "jest -i --no-cache --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
@@ -38,10 +45,10 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "prettier": "^3.4.2",
     "prisma": "^5.12.1",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
-  },
-  "packageManager": "yarn@4.1.1"
+  }
 }
