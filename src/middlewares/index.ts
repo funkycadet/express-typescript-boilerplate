@@ -1,4 +1,4 @@
-import validateReqBody from "./validateReqBody";
-import validateJWT from "./validateJwt";
+import validateReqBody from './validateReqBody';
+import validateJWT from './validateJwt';
 
 export { validateReqBody, validateJWT };

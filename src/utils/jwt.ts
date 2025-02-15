@@ -1,12 +1,12 @@
-import { TokenData, PublicUserData } from "../types";
-import { IUser } from "../interfaces";
+import { TokenData, PublicUserData } from '../types';
+import { IUser } from '../interfaces';
 
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export const signJWT = (
   data: TokenData,
   secret: string,
-  expiry: string
+  expiry: string,
 ): string => {
   const token = jwt.sign(data, secret, {
     expiresIn: expiry,

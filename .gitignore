@@ -36,3 +36,12 @@ lerna-debug.log*
 # env files
 .env
 .eslintrc.js
+
+
+.editorconfig
+.gitattributes
+src/controllers/admin.controllers.ts
+src/interfaces/admin.interface.ts
+src/routes/admin.routes.ts 
+src/services/admin.service.ts
+dev.Dockerfile
