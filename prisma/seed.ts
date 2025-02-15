@@ -5,19 +5,31 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Create superadmin user
-  const superadminPassword = await argon2.hash("superadminpassword");
+  const superadminPassword = await argon2.hash("P455W0Rd");
 
   await prisma.user.upsert({
-    where: { email_address: "superadmin@example.com" },
+    where: { emailAddress: "superadmin@example.com" },
     update: {},
     create: {
       firstName: "Super",
       lastName: "Admin",
-      email_address: "superadmin@example.com",
+      emailAddress: "superadmin@example.com",
       password: superadminPassword,
-      phone_number: "",
       gender: "male",
-      roles: ["admin"],
+      role: "superadmin",
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { emailAddress: "admin@example.com" },
+    update: {},
+    create: {
+      firstName: "Admin",
+      lastName: "User",
+      emailAddress: "admin@example.com",
+      password: superadminPassword,
+      gender: "female",
+      role: "admin",
     },
   });
 }

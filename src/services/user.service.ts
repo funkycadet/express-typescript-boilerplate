@@ -1,5 +1,5 @@
-import { db } from "../database";
-import { IUser } from "../interfaces";
+import { db } from '../database';
+import { IUser, IUserSignup } from '../interfaces';
 
 class UserService {
   public async getAllUsers(skip: number, limit: number): Promise<IUser[]> {
@@ -23,7 +23,7 @@ class UserService {
     });
   }
 
-  public async createUser(data: IUser): Promise<IUser> {
+  public async createUser(data: IUserSignup): Promise<IUser> {
     return await db.user.create({
       data,
     });

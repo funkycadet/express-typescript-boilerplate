@@ -22,6 +22,15 @@ services:
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
+  
+  test-db:
+    image: postgres:17
+    container_name: test-sample-db
+    ports:
+      - 5434:5432
+    env_file:
+      - .env.test
+    restart: unless-stopped
 
 volumes:
   pgdata:

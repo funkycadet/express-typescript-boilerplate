@@ -11,12 +11,10 @@ model User {
   id            String   @id @default(cuid())
   firstName     String
   lastName      String
-  email_address String   @unique
-  phone_number  String
+  emailAddress  String   @unique
   password      String
   gender        String
-  roles          Role[]
-  refreshTokens String[]
+  role          Role @default(user)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -25,4 +23,5 @@ model User {
 enum Role {
   user
   admin
+  superadmin
 }

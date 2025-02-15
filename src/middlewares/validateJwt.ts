@@ -1,9 +1,4 @@
-import {
-  Request,
-  Response,
-  NextFunction,
-  RequestHandler,
-} from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { UnauthorizedError } from '../exceptions';

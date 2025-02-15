@@ -1,5 +1,5 @@
-import joi, { Schema, ValidationOptions } from "joi";
-import { Request, Response, NextFunction, RequestHandler } from "express";
+import joi, { Schema, ValidationOptions } from 'joi';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 export default (schema: Schema): RequestHandler => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -16,11 +16,11 @@ export default (schema: Schema): RequestHandler => {
 
       next();
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
       const errMessages: string[] = [];
       err.details.map((e: any) => errMessages.push(e.message));
       err.statusCode = 409;
-      err.message = errMessages.join(",");
+      err.message = errMessages.join(',');
       next(err);
     }
   };

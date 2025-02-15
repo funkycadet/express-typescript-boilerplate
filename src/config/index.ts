@@ -1,4 +1,4 @@
-import "./importEnvs";
+import './importEnvs';
 
 const PORT = process.env.PORT;
 const ENV = process.env.ENV;
@@ -10,7 +10,7 @@ const REFRESH_TOKEN_EXPIRY = process.env.REFRESH_TOKEN_EXPIRY;
 // const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 let DB;
 
-if (ENV === "production") {
+if (ENV === 'production') {
   DB = process.env.DB_PROD;
 } else {
   DB = process.env.DB_DEV;

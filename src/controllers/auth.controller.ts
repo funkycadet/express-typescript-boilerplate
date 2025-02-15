@@ -1,5 +1,5 @@
-import { AuthService } from "../services";
-import { Request, Response, NextFunction, RequestHandler } from "express";
+import { AuthService } from '../services';
+import { Request, Response, NextFunction } from 'express';
 
 class AuthController {
   service: AuthService;
@@ -10,22 +10,26 @@ class AuthController {
   signup = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response> => {
     try {
-      const { firstName, lastName, email_address, password, phone_number, gender } =
-        req.body;
+      const user = await this.service.signup({ ...req.body });
 
-      const user = await this.service.signup(
-        firstName,
-        lastName,
-        email_address,
-        password,
-        phone_number,
-        gender
-      );
+      return res.status(201).json({ status: 'success', data: user });
+    } catch (err: any) {
+      next(err);
+    }
+  };
 
-      return res.status(201).json({ status: "success", data: user });
+  adminSignup = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
+    try {
+      const user = await this.service.adminSignup({ ...req.body });
+
+      return res.status(201).json({ status: 'success', data: user });
     } catch (err: any) {
       next(err);
     }
@@ -34,18 +38,16 @@ class AuthController {
   login = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response> => {
     try {
-      const { email_address, password } = req.body;
-
-      const user = await this.service.login(email_address, password);
+      const user = await this.service.login({ ...req.body });
 
       return res
-        .cookie("jwt", user.refreshToken, { httpOnly: true })
+        .cookie('jwt', user.refreshToken, { httpOnly: true })
         .status(200)
         .json({
-          status: "success",
+          status: 'success',
           data: user.data,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
@@ -58,7 +60,7 @@ class AuthController {
   refreshTokens = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> => {
     try {
       // const { token } = req.body;

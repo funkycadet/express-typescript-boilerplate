@@ -7,14 +7,25 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write",
+    "format:all": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "start": "node dist/src/server.js",
     "start:dev": "tsc-watch --onSuccess \"ts-node ./src/server.ts\"",
     "migration:create": "prisma migrate dev",
     "migration:deploy": "prisma migrate deploy",
     "migration:generate": "prisma generate",
+    "pretest:int": "yarn test-db:restart && sleep 2 && dotenv -e .env.test -- prisma migrate reset --force",
     "prisma:init": "npx prisma init",
     "prisma:seed": "ts-node --transpile-only prisma/seed.ts",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "test": "jest",
+    "test-db:restart": "docker compose down && docker compose up -d test-db",
+    "test-db:stop": "docker compose down",
+    "test:watch": "dotenv -e .env.test -- jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:int": "jest -i --no-cache --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
@@ -38,10 +49,16 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/supertest": "^6.0.2",
+    "dotenv-cli": "^8.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
     "prisma": "^5.12.1",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
-  },
-  "packageManager": "yarn@4.1.1"
+  }
 }
